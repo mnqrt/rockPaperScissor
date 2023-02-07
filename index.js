@@ -5,36 +5,40 @@ function getComputerChoice(){
     else return "Scissor";
 }
 
-function playRound(playerSelection,computerSelection){
+function playRound(playerSelection,computerSelection=getComputerChoice()){
     let playerSelectionChar=playerSelection[0].toUpperCase();
-    if(playerSelectionChar==computerSelection[0])return "Draw!";
+    if(playerSelectionChar==computerSelection[0])return "Draw";
     else if(playerSelectionChar=='R'){
-        return computerSelection=='Scissor' ? "You Won! Rock beats Scissor" : "You Lost! Paper beats Scissor";
+        return computerSelection=='Scissor' ? "Win" : "Lose";
     }
     else if(playerSelectionChar=='P'){
-        return computerSelection=='Rock' ? "You Won! Paper beats Rock" : "You Lost! Scissor beats Paper";
+        return computerSelection=='Rock' ? "Win" : "Lose";
     }
     else{
-        return computerSelection=='Paper' ? "You Won! Scissor beats Paper" : "You Lost! Rock beats Scissor";
+        return computerSelection=='Paper' ? "Win" : "Lose";
     }
 }
 
-function game(){
-    let scorePlayer=0,scoreComputer=0;
-    for(let i=1;i<=5;i++){
-        const playerSelection=prompt("Input Your Choice!");
-        const computerSelection=getComputerChoice();
-        const gameResult=playRound(playerSelection,computerSelection);
-        if(gameResult.slice(4,7)=='Won')scorePlayer++;
-        else if(gameResult.slice(4,8)=='Lost')scoreComputer++;
-        console.log(gameResult);
-    }
-    if(scorePlayer>scoreComputer)console.log("You Won!!! Congrats");
-    else if(scorePlayer==scoreComputer)console.log("Draw, GG");
-    else console.log("You Lose!! NT");
-}
+var playerScore=0,computerScore=0;
 
-game();
+const playerScoreTxt = document.querySelector("#playerScore");
+const computerScoreTxt = document.querySelector("#computerScore");
+const computersChoiceTxt = document.querySelector("#computersChoice")
 
-
+const buttons = document.querySelectorAll("button");
+buttons.forEach((button)=>{
+    var playerChoice;
+    if(button.id=="rock")playerChoice="ROCK";
+    else if(button.id=="paper")playerChoice="PAPER";
+    else playerChoice="SCISSOR";
+    button.addEventListener("click",()=>{
+        computerSelectResult=getComputerChoice();
+        const result=playRound(playerChoice,computerSelectResult);
+        if(result=="Win")playerScore++;
+        if(result=="Lose") computerScore++;
+        playerScoreTxt.textContent =  `Your Score: ${playerScore}`;
+        computerScoreTxt.textContent =  `Your Score: ${computerScore}`;
+        computersChoiceTxt.textContent = `The computer chose ${computerSelectResult}, so the result is ${result}`;
+    });
+});
 
