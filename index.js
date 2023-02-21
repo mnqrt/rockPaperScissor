@@ -28,7 +28,9 @@ const gameResult = document.querySelector(".gameResult");
 const finalWinner = document.querySelector(".finalWinner"); 
 const buttons = document.querySelectorAll(".btn");
 
-gameResult.style["margin-bottom"] = 20; 
+gameResult.style["margin-bottom"] = "20px";
+gameResult.style["font-size"] = "20px";
+gameResult.style["font-weight"] = "600";
 
 function getResult(e){
     if(this.id=="rock")playerChoice="ROCK";
